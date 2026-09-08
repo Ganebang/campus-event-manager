@@ -1,26 +1,384 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+    :root {
+        /* Navigation */
+        --nav:         #232f3e;
+        --nav-hover:   #2d3b4e;
+        --nav-text:    #d5dbdb;
+        --nav-muted:   #879596;
+
+        /* Brand colors */
+        --primary:       #0073bb;
+        --primary-hover: #005b99;
+        --accent:        #ec7211;
+
+        /* Surface */
+        --bg:           #f2f3f3;
+        --surface:      #ffffff;
+        --border:       #d5dbdb;
+        --border-light: #eaeded;
+
+        /* Text */
+        --text:   #16191f;
+        --muted:  #5f6b7a;
+        --label:  #414d5b;
+
+        /* Status */
+        --success:    #1d8102;
+        --success-bg: #f2f8ef;
+        --error:      #d13212;
+        --error-bg:   #fdf3f1;
+        --warning:    #8a6116;
+        --warning-bg: #fef9ef;
+        --info-bg:    #f0f8ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', -apple-system, system-ui, sans-serif;
+        font-size: 14px;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #c0c6ca; border-radius: 2px; }
+
+    ::selection { background: rgba(0, 115, 187, 0.15); color: var(--primary); }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer utilities {
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    /* ── Table ── */
+    .aws-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+    .aws-table th {
+        background: #f2f3f3;
+        color: var(--label);
+        font-weight: 700;
+        font-size: 12px;
+        text-align: left;
+        padding: 8px 12px;
+        border-bottom: 2px solid var(--border);
+        border-top: 1px solid var(--border);
+        white-space: nowrap;
+    }
+    .aws-table td {
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--border-light);
+        vertical-align: middle;
+        color: var(--text);
+    }
+    .aws-table tbody tr:hover { background: #f8f9fa; }
+    .aws-table tbody tr:last-child td { border-bottom: none; }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    /* ── Panel ── */
+    .aws-panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+    }
+    .aws-panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-light);
+    }
+    .aws-panel-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+    }
+    .aws-panel-body { padding: 16px; }
+
+    /* ── Stat card ── */
+    .aws-stat {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 16px 20px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .aws-stat:hover { border-color: var(--primary); }
+    .aws-stat-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        margin-bottom: 6px;
+    }
+    .aws-stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1;
+    }
+
+    /* ── Section header ── */
+    .aws-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        background: #f2f3f3;
+        border-bottom: 1px solid var(--border-light);
+    }
+    .aws-section-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--label);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    /* ── Buttons ── */
+    .btn-aws-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 13px;
+        border: 1px solid #006699;
+        border-radius: 2px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.1s;
+        text-decoration: none;
+        line-height: 1.5;
+    }
+    .btn-aws-primary:hover:not(:disabled) { background: var(--primary-hover); }
+    .btn-aws-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-aws-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: var(--surface);
+        color: var(--text);
+        font-size: 13px;
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.1s;
+        text-decoration: none;
+        line-height: 1.5;
+    }
+    .btn-aws-secondary:hover:not(:disabled) { background: #f2f3f3; }
+
+    .btn-aws-danger {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: var(--surface);
+        color: var(--error);
+        font-size: 13px;
+        border: 1px solid #b0190c;
+        border-radius: 2px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.1s;
+        line-height: 1.5;
+    }
+    .btn-aws-danger:hover:not(:disabled) { background: var(--error-bg); }
+
+    /* ── Form controls ── */
+    .aws-input {
+        display: block;
+        width: 100%;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        outline: none;
+        transition: border-color 0.1s, box-shadow 0.1s;
+        line-height: 1.5;
+    }
+    .aws-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(0, 115, 187, 0.2);
+    }
+    .aws-input::placeholder { color: #879596; }
+
+    .aws-select {
+        display: block;
+        width: 100%;
+        padding: 6px 28px 6px 10px;
+        font-size: 13px;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235f6b7a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        line-height: 1.5;
+        transition: border-color 0.1s;
+    }
+    .aws-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(0, 115, 187, 0.2);
+    }
+
+    .aws-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--label);
+        margin-bottom: 4px;
+    }
+
+    /* ── Status badges ── */
+    .badge-confirmed {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 11px; padding: 1px 7px;
+        background: var(--success-bg); color: var(--success);
+        border: 1px solid #cef5c2; border-radius: 12px;
+    }
+    .badge-cancelled {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 11px; padding: 1px 7px;
+        background: var(--error-bg); color: var(--error);
+        border: 1px solid #f5bcb3; border-radius: 12px;
+    }
+    .badge-past {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 11px; padding: 1px 7px;
+        background: #f2f3f3; color: var(--muted);
+        border: 1px solid var(--border); border-radius: 12px;
+    }
+    .badge-upcoming {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 11px; padding: 1px 7px;
+        background: var(--info-bg); color: var(--primary);
+        border: 1px solid #b0d8f0; border-radius: 12px;
+    }
+    .badge-full {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 11px; padding: 1px 7px;
+        background: var(--warning-bg); color: var(--warning);
+        border: 1px solid #f0d68a; border-radius: 12px;
+    }
+    .badge-category {
+        display: inline-flex;
+        font-size: 11px; padding: 1px 7px;
+        background: #f2f3f3; color: var(--label);
+        border: 1px solid var(--border); border-radius: 2px;
+    }
+    .badge-role {
+        display: inline-flex;
+        font-size: 11px; padding: 1px 7px;
+        background: var(--info-bg); color: var(--primary);
+        border: 1px solid #b0d8f0; border-radius: 2px;
+        text-transform: capitalize;
+    }
+    .badge-tag {
+        display: inline-flex;
+        font-size: 11px; padding: 1px 7px;
+        background: #f2f3f3; color: var(--muted);
+        border: 1px solid var(--border); border-radius: 2px;
+    }
+
+    /* ── Progress bar ── */
+    .aws-progress-track {
+        height: 4px;
+        background: #eaeded;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    .aws-progress-fill {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    /* ── Modal ── */
+    .aws-modal-overlay {
+        position: fixed; inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        display: flex; align-items: center; justify-content: center;
+        padding: 1rem;
+    }
+    .aws-modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        width: 100%; max-width: 560px;
+        max-height: 90vh; overflow-y: auto;
+        animation: slideIn 0.15s ease-out;
+    }
+    .aws-modal-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border-light);
+    }
+    .aws-modal-title { font-size: 18px; font-weight: 700; color: var(--text); margin: 0; }
+    .aws-modal-body { padding: 20px; }
+    .aws-modal-footer {
+        display: flex; justify-content: flex-end; gap: 8px;
+        padding: 12px 20px;
+        border-top: 1px solid var(--border-light);
+        background: #f2f3f3;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(-12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Alert boxes ── */
+    .aws-alert-error {
+        display: flex; align-items: flex-start; gap: 8px;
+        padding: 10px 14px; font-size: 13px;
+        background: var(--error-bg); color: var(--error);
+        border: 1px solid #f5bcb3; border-left: 4px solid var(--error);
+        border-radius: 2px; margin-bottom: 12px;
+    }
+    .aws-alert-info {
+        display: flex; align-items: flex-start; gap: 8px;
+        padding: 10px 14px; font-size: 13px;
+        background: var(--info-bg); color: var(--primary);
+        border: 1px solid #b0d8f0; border-left: 4px solid var(--primary);
+        border-radius: 2px; margin-bottom: 12px;
+    }
+
+    /* ── Search ── */
+    .aws-search-wrapper { position: relative; }
+    .aws-search-icon {
+        position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+        color: #879596; width: 14px; height: 14px; pointer-events: none;
+    }
+    .aws-search-input { padding-left: 30px !important; }
+
+    /* ── Link hover (CSS-only, for server components) ── */
+    .aws-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .aws-link:hover { text-decoration: underline; }
 }

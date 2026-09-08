@@ -1,69 +1,159 @@
-import Image from "next/image";
+﻿import { getDashboardStats, getNextUpcomingEvents, getMostPopularEvent, getCategoryBreakdown } from '@/lib/queries';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+export const dynamic = 'force-dynamic';
+
+export default async function Dashboard() {
+    const [stats, upcomingEvents, mostPopularEvent, categoryBreakdown] = await Promise.all([
+        getDashboardStats(),
+        getNextUpcomingEvents(8),
+        getMostPopularEvent(),
+        getCategoryBreakdown(),
+    ]);
+
+    const popularConfirmedCount = mostPopularEvent
+        ? (mostPopularEvent.registrations?.filter((r: any) => r.status === 'confirmed').length || 0)
+        : 0;
+    const popularOccupancy = mostPopularEvent && mostPopularEvent.capacity > 0
+        ? Math.round((popularConfirmedCount / mostPopularEvent.capacity) * 100)
+        : 0;
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+            {/* Page title */}
+            <div>
+                <h1 style={{ fontSize: '20px', fontWeight: '700', color: 'var(--text)', margin: 0 }}>Dashboard</h1>
+                <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '2px' }}>Overview of campus event activity</p>
+            </div>
+
+            {/* KPI Row */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
+                {[
+                    { label: 'Total Users',     value: stats.totalUsers,         href: '/users' },
+                    { label: 'Total Events',    value: stats.totalEvents,        href: '/events' },
+                    { label: 'Upcoming Events', value: stats.upcomingEvents,     href: '/events?timeframe=upcoming' },
+                    { label: 'Registrations',   value: stats.totalRegistrations, href: '/analytics' },
+                ].map(kpi => (
+                    <Link key={kpi.label} href={kpi.href} style={{ textDecoration: 'none' }}>
+                        <div className="aws-stat">
+                            <div className="aws-stat-label">{kpi.label}</div>
+                            <div className="aws-stat-value">{kpi.value}</div>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '16px' }}>
+
+                {/* Upcoming events table */}
+                <div className="aws-panel">
+                    <div className="aws-panel-header">
+                        <h2 className="aws-panel-title">Upcoming Events</h2>
+                        <Link href="/events?timeframe=upcoming" className="btn-aws-secondary" style={{ fontSize: '12px', padding: '4px 10px' }}>
+                            View all <ArrowRight size={12} />
+                        </Link>
+                    </div>
+                    <table className="aws-table">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Seats</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {upcomingEvents.length === 0 ? (
+                                <tr><td colSpan={6} style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px' }}>No upcoming events</td></tr>
+                            ) : (
+                                upcomingEvents.map((event: any) => {
+                                    const confirmed = event.registrations?.filter((r: any) => r.status === 'confirmed').length || 0;
+                                    const isFull = confirmed >= event.capacity;
+                                    const pct = event.capacity > 0 ? Math.round(confirmed / event.capacity * 100) : 0;
+                                    return (
+                                        <tr key={event._id}>
+                                            <td>
+                                                <Link href={`/events/${event._id}`} className="aws-link">
+                                                    {event.title}
+                                                </Link>
+                                            </td>
+                                            <td><span className="badge-category">{event.category}</span></td>
+                                            <td style={{ color: 'var(--muted)', whiteSpace: 'nowrap' }}>
+                                                {new Date(event.startDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                            </td>
+                                            <td style={{ color: 'var(--muted)' }}>{event.location?.building}</td>
+                                            <td style={{ whiteSpace: 'nowrap' }}>
+                                                <span>{confirmed}/{event.capacity}</span>
+                                                <div className="aws-progress-track" style={{ width: '60px', marginTop: '4px' }}>
+                                                    <div className="aws-progress-fill" style={{ width: `${pct}%`, background: isFull ? 'var(--error)' : pct >= 80 ? 'var(--warning)' : 'var(--primary)' }} />
+                                                </div>
+                                            </td>
+                                            <td>{isFull ? <span className="badge-full">Full</span> : <span className="badge-upcoming">Open</span>}</td>
+                                        </tr>
+                                    );
+                                })
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Right column */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+                    {/* Most popular event */}
+                    {mostPopularEvent && (
+                        <div className="aws-panel">
+                            <div className="aws-section-header">
+                                <span className="aws-section-title">Most Popular Event</span>
+                            </div>
+                            <div className="aws-panel-body">
+                                <Link href={`/events/${mostPopularEvent._id}`} className="aws-link">
+                                    {mostPopularEvent.title}
+                                </Link>
+                                <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '4px', marginBottom: '12px' }}>
+                                    {mostPopularEvent.category} · {mostPopularEvent.location?.campus}
+                                </p>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '6px' }}>
+                                    <span style={{ color: 'var(--muted)' }}>Occupancy</span>
+                                    <span style={{ fontWeight: '700' }}>{popularConfirmedCount} / {mostPopularEvent.capacity} seats ({popularOccupancy}%)</span>
+                                </div>
+                                <div className="aws-progress-track">
+                                    <div className="aws-progress-fill" style={{ width: `${popularOccupancy}%`, background: 'var(--primary)' }} />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Category breakdown */}
+                    <div className="aws-panel" style={{ flex: 1 }}>
+                        <div className="aws-section-header">
+                            <span className="aws-section-title">Events by Category</span>
+                            <Link href="/analytics" className="aws-link" style={{ fontSize: '12px', fontWeight: '400' }}>Details</Link>
+                        </div>
+                        <div className="aws-panel-body" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                            {categoryBreakdown.map((cat: any) => {
+                                const max = Math.max(...categoryBreakdown.map((c: any) => c.count), 1);
+                                const pct = Math.round((cat.count / max) * 100);
+                                return (
+                                    <div key={cat._id}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
+                                            <span style={{ color: 'var(--text)' }}>{cat._id}</span>
+                                            <span style={{ color: 'var(--muted)', fontWeight: '600' }}>{cat.count}</span>
+                                        </div>
+                                        <div className="aws-progress-track">
+                                            <div className="aws-progress-fill" style={{ width: `${pct}%`, background: 'var(--primary)' }} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    );
 }
