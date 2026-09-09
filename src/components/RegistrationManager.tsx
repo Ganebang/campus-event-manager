@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import { registerForEvent } from '@/actions/registerActions';
@@ -41,7 +41,7 @@ export default function RegistrationManager({ eventId, availableUsers, isFull }:
 
     if (isFull) {
         return (
-            <div className="aws-alert-info" style={{ marginBottom: 0 }}>
+            <div className="alert-info" style={{ marginBottom: 0 }}>
                 <AlertCircle size={14} style={{ flexShrink: 0, marginTop: '1px' }} />
                 Event is at full capacity. No more registrations can be accepted.
             </div>
@@ -59,7 +59,7 @@ export default function RegistrationManager({ eventId, availableUsers, isFull }:
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {error && (
-                <div className="aws-alert-error" style={{ marginBottom: 0 }}>
+                <div className="alert-error" style={{ marginBottom: 0 }}>
                     <AlertCircle size={14} style={{ flexShrink: 0 }} /> {error}
                 </div>
             )}
@@ -69,7 +69,7 @@ export default function RegistrationManager({ eventId, availableUsers, isFull }:
                     value={selectedUserId}
                     onChange={e => setSelectedUserId(e.target.value)}
                     disabled={loading}
-                    className="aws-select"
+                    className="field-select"
                     style={{ flex: 1 }}
                 >
                     <option value="">Select a user...</option>
@@ -83,7 +83,7 @@ export default function RegistrationManager({ eventId, availableUsers, isFull }:
                     id="register-btn"
                     onClick={handleRegister}
                     disabled={!selectedUserId || loading}
-                    className="btn-aws-primary"
+                    className="btn-primary"
                     style={{ flexShrink: 0 }}
                 >
                     {loading ? <Loader2 size={13} className="animate-spin" /> : 'Register'}

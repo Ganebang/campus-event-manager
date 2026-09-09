@@ -1,4 +1,4 @@
-﻿import {
+import {
     getRegistrationsByCategory,
     getTop5PopularEvents,
     getUsersWithNoRegistration,
@@ -44,9 +44,9 @@ export default async function AnalyticsPage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
 
                 {/* A: Registrations by category — uses $group + $sum aggregation pipeline */}
-                <div className="aws-panel">
-                    <div className="aws-section-header">
-                        <span className="aws-section-title">Registrations by Category</span>
+                <div className="panel">
+                    <div className="section-header">
+                        <span className="section-title">Registrations by Category</span>
                     </div>
                     <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {regsByCategory.map((cat: any) => {
@@ -57,8 +57,8 @@ export default async function AnalyticsPage() {
                                         <span style={{ color: 'var(--text)' }}>{cat._id}</span>
                                         <span style={{ color: 'var(--muted)' }}>{cat.totalRegistrations} registrations · {cat.eventCount} events</span>
                                     </div>
-                                    <div className="aws-progress-track" style={{ height: '5px' }}>
-                                        <div className="aws-progress-fill" style={{ width: `${barPct}%`, background: 'var(--primary)' }} />
+                                    <div className="progress-track" style={{ height: '5px' }}>
+                                        <div className="progress-fill" style={{ width: `${barPct}%`, background: 'var(--primary)' }} />
                                     </div>
                                 </div>
                             );
@@ -67,11 +67,11 @@ export default async function AnalyticsPage() {
                 </div>
 
                 {/* B: Top 5 most popular events — uses $sort + $limit + occupancy calculation */}
-                <div className="aws-panel">
-                    <div className="aws-section-header">
-                        <span className="aws-section-title">Top 5 Most Popular Events</span>
+                <div className="panel">
+                    <div className="section-header">
+                        <span className="section-title">Top 5 Most Popular Events</span>
                     </div>
-                    <table className="aws-table">
+                    <table className="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -90,8 +90,8 @@ export default async function AnalyticsPage() {
                                     <td style={{ fontWeight: '700' }}>{evt.confirmedRegistrations}</td>
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <div className="aws-progress-track" style={{ width: '60px', height: '4px' }}>
-                                                <div className="aws-progress-fill" style={{
+                                            <div className="progress-track" style={{ width: '60px', height: '4px' }}>
+                                                <div className="progress-fill" style={{
                                                     width: `${Math.min(evt.occupancyPercentage, 100)}%`,
                                                     background: evt.occupancyPercentage >= 100 ? 'var(--error)' : 'var(--primary)'
                                                 }} />
@@ -106,16 +106,16 @@ export default async function AnalyticsPage() {
                 </div>
 
                 {/* C: Users with no registrations — uses $lookup + size filter */}
-                <div className="aws-panel">
-                    <div className="aws-section-header">
-                        <span className="aws-section-title">Users With No Registration ({inactiveUsers.length})</span>
+                <div className="panel">
+                    <div className="section-header">
+                        <span className="section-title">Users With No Registration ({inactiveUsers.length})</span>
                     </div>
                     {inactiveUsers.length === 0 ? (
                         <div style={{ padding: '24px', textAlign: 'center', color: 'var(--muted)', fontSize: '13px' }}>
                             All users have at least one registration.
                         </div>
                     ) : (
-                        <table className="aws-table">
+                        <table className="data-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -139,9 +139,9 @@ export default async function AnalyticsPage() {
                 </div>
 
                 {/* D: Events above average occupancy — uses $facet + $avg + $filter */}
-                <div className="aws-panel">
-                    <div className="aws-section-header">
-                        <span className="aws-section-title">Events Above Average Occupancy</span>
+                <div className="panel">
+                    <div className="section-header">
+                        <span className="section-title">Events Above Average Occupancy</span>
                     </div>
                     <div style={{ padding: '8px 16px 4px', borderBottom: '1px solid var(--border-light)' }}>
                         <span style={{ fontSize: '12px', color: 'var(--muted)' }}>
@@ -151,7 +151,7 @@ export default async function AnalyticsPage() {
                     {occupancyData?.events?.length === 0 ? (
                         <div style={{ padding: '24px', textAlign: 'center', color: 'var(--muted)', fontSize: '13px' }}>No events above average.</div>
                     ) : (
-                        <table className="aws-table">
+                        <table className="data-table">
                             <thead>
                                 <tr>
                                     <th>Event</th>
@@ -168,8 +168,8 @@ export default async function AnalyticsPage() {
                                             <td style={{ color: 'var(--muted)' }}>{e.confirmedRegistrations}/{e.capacity}</td>
                                             <td>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <div className="aws-progress-track" style={{ width: '60px', height: '4px' }}>
-                                                        <div className="aws-progress-fill" style={{ width: `${Math.min(pct, 100)}%`, background: 'var(--success)' }} />
+                                                    <div className="progress-track" style={{ width: '60px', height: '4px' }}>
+                                                        <div className="progress-fill" style={{ width: `${Math.min(pct, 100)}%`, background: 'var(--success)' }} />
                                                     </div>
                                                     <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--success)' }}>{pct.toFixed(1)}%</span>
                                                 </div>
@@ -183,11 +183,11 @@ export default async function AnalyticsPage() {
                 </div>
 
                 {/* E: Most used tags — uses $unwind + $group + $sort aggregation pipeline */}
-                <div className="aws-panel">
-                    <div className="aws-section-header">
-                        <span className="aws-section-title">Most Used Tags</span>
+                <div className="panel">
+                    <div className="section-header">
+                        <span className="section-title">Most Used Tags</span>
                     </div>
-                    <table className="aws-table">
+                    <table className="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -203,8 +203,8 @@ export default async function AnalyticsPage() {
                                     <td><span className="badge-tag">#{t._id}</span></td>
                                     <td style={{ fontWeight: '700' }}>{t.count}</td>
                                     <td>
-                                        <div className="aws-progress-track" style={{ width: '80px', height: '4px' }}>
-                                            <div className="aws-progress-fill" style={{ width: `${(t.count / maxTagCount) * 100}%`, background: 'var(--primary)' }} />
+                                        <div className="progress-track" style={{ width: '80px', height: '4px' }}>
+                                            <div className="progress-fill" style={{ width: `${(t.count / maxTagCount) * 100}%`, background: 'var(--primary)' }} />
                                         </div>
                                     </td>
                                 </tr>
@@ -214,11 +214,11 @@ export default async function AnalyticsPage() {
                 </div>
 
                 {/* F: Events by month — uses $group by year/month */}
-                <div className="aws-panel">
-                    <div className="aws-section-header">
-                        <span className="aws-section-title">Events by Month</span>
+                <div className="panel">
+                    <div className="section-header">
+                        <span className="section-title">Events by Month</span>
                     </div>
-                    <table className="aws-table">
+                    <table className="data-table">
                         <thead>
                             <tr>
                                 <th>Period</th>
@@ -238,8 +238,8 @@ export default async function AnalyticsPage() {
                                         <td style={{ fontWeight: '700' }}>{m.eventCount}</td>
                                         <td style={{ color: 'var(--muted)' }}>{m.totalRegistrations}</td>
                                         <td>
-                                            <div className="aws-progress-track" style={{ width: '80px', height: '4px' }}>
-                                                <div className="aws-progress-fill" style={{ width: `${barPct}%`, background: 'var(--primary)' }} />
+                                            <div className="progress-track" style={{ width: '80px', height: '4px' }}>
+                                                <div className="progress-fill" style={{ width: `${barPct}%`, background: 'var(--primary)' }} />
                                             </div>
                                         </td>
                                     </tr>

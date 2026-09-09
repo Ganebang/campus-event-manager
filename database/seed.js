@@ -116,13 +116,18 @@ async function seedDB() {
             };
         });
 
+        // Reserve last 3 users — they will never be registered, so they always
+        // appear in the Analytics "Users With No Registration" report.
+        const RESERVED_INACTIVE = 3;
+        const activeUsers = users.slice(0, users.length - RESERVED_INACTIVE);
+
         // Distribute registrations — guaranteed 40+ confirmed, skip the last event (index 17)
         let totalConfirmed = 0;
         const eventsWithRegistrations = events.slice(0, 17);
 
         for (const event of eventsWithRegistrations) {
             const numberOfRegistrations = Math.floor(Math.random() * 5) + 2;
-            const shuffledUsers = [...users].sort(() => 0.5 - Math.random());
+            const shuffledUsers = [...activeUsers].sort(() => 0.5 - Math.random());
 
             for (let j = 0; j < numberOfRegistrations && j < event.capacity; j++) {
                 event.registrations.push({
@@ -138,7 +143,7 @@ async function seedDB() {
         while (totalConfirmed < 40) {
             const targetEvent = eventsWithRegistrations[Math.floor(Math.random() * eventsWithRegistrations.length)];
             const currentRegisteredUserIds = targetEvent.registrations.map(r => r.userId.toString());
-            const unregisteredUsers = users.filter(u => !currentRegisteredUserIds.includes(u._id.toString()));
+            const unregisteredUsers = activeUsers.filter(u => !currentRegisteredUserIds.includes(u._id.toString()));
 
             if (unregisteredUsers.length > 0 && targetEvent.registrations.length < targetEvent.capacity) {
                 targetEvent.registrations.push({

@@ -71,7 +71,7 @@ export default async function EventDetailsPage({ params }: any) {
                 <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
                     <EditEventModal event={event} allUsers={allUsers} handleUpdate={handleUpdate} />
                     <form action={handleDelete}>
-                        <button type="submit" className="btn-aws-danger">
+                        <button type="submit" className="btn-danger">
                             <Trash2 size={13} /> Delete
                         </button>
                     </form>
@@ -85,9 +85,9 @@ export default async function EventDetailsPage({ params }: any) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
                     {/* Details panel */}
-                    <div className="aws-panel">
-                        <div className="aws-section-header">
-                            <span className="aws-section-title">Event Details</span>
+                    <div className="panel">
+                        <div className="section-header">
+                            <span className="section-title">Event Details</span>
                         </div>
                         <div style={{ padding: '0' }}>
                             {[
@@ -115,17 +115,17 @@ export default async function EventDetailsPage({ params }: any) {
                     </div>
 
                     {/* Capacity panel */}
-                    <div className="aws-panel">
-                        <div className="aws-section-header">
-                            <span className="aws-section-title">Capacity</span>
+                    <div className="panel">
+                        <div className="section-header">
+                            <span className="section-title">Capacity</span>
                         </div>
                         <div style={{ padding: '14px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '8px' }}>
                                 <span style={{ color: 'var(--muted)' }}>Registered</span>
                                 <span style={{ fontWeight: '700' }}>{confirmedCount} / {event.capacity}</span>
                             </div>
-                            <div className="aws-progress-track" style={{ height: '6px' }}>
-                                <div className="aws-progress-fill" style={{
+                            <div className="progress-track" style={{ height: '6px' }}>
+                                <div className="progress-fill" style={{
                                     width: `${Math.min(occupancyPercent, 100)}%`,
                                     background: isFull ? 'var(--error)' : occupancyPercent >= 80 ? 'var(--warning)' : 'var(--primary)'
                                 }} />
@@ -138,9 +138,9 @@ export default async function EventDetailsPage({ params }: any) {
                 </div>
 
                 {/* Right column: registrations */}
-                <div className="aws-panel">
-                    <div className="aws-panel-header">
-                        <h2 className="aws-panel-title" style={{ fontSize: '14px' }}>
+                <div className="panel">
+                    <div className="panel-header">
+                        <h2 className="panel-title" style={{ fontSize: '14px' }}>
                             Registrations <span style={{ fontWeight: '400', color: 'var(--muted)', fontSize: '13px' }}>({event.registrations?.length || 0})</span>
                         </h2>
                         {isFull && <span className="badge-full">At capacity</span>}
@@ -158,7 +158,7 @@ export default async function EventDetailsPage({ params }: any) {
                             No registrations yet.
                         </div>
                     ) : (
-                        <table className="aws-table">
+                        <table className="data-table">
                             <thead>
                                 <tr>
                                     <th>Participant</th>
@@ -175,7 +175,7 @@ export default async function EventDetailsPage({ params }: any) {
                                     return (
                                         <tr key={idx}>
                                             <td>
-                                                <Link href={`/users/${user._id}`} className="aws-link">
+                                                <Link href={`/users/${user._id}`} className="link">
                                                     {user.firstName} {user.lastName}
                                                 </Link>
                                             </td>
@@ -194,7 +194,7 @@ export default async function EventDetailsPage({ params }: any) {
                                                     'use server';
                                                     await cancelRegistration(id, user._id.toString());
                                                 }}>
-                                                    <button type="submit" className="btn-aws-danger" style={{ padding: '3px 10px', fontSize: '12px' }}>
+                                                    <button type="submit" className="btn-danger" style={{ padding: '3px 10px', fontSize: '12px' }}>
                                                         Remove
                                                     </button>
                                                 </form>

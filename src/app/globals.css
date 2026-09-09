@@ -56,13 +56,13 @@
 
 @layer utilities {
 
-    /* ── Table ── */
-    .aws-table {
+    /* ── Data Table ── */
+    .data-table {
         width: 100%;
         border-collapse: collapse;
         font-size: 13px;
     }
-    .aws-table th {
+    .data-table th {
         background: #f2f3f3;
         color: var(--label);
         font-weight: 700;
@@ -73,46 +73,46 @@
         border-top: 1px solid var(--border);
         white-space: nowrap;
     }
-    .aws-table td {
+    .data-table td {
         padding: 9px 12px;
         border-bottom: 1px solid var(--border-light);
         vertical-align: middle;
         color: var(--text);
     }
-    .aws-table tbody tr:hover { background: #f8f9fa; }
-    .aws-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover { background: #f8f9fa; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
 
     /* ── Panel ── */
-    .aws-panel {
+    .panel {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 2px;
     }
-    .aws-panel-header {
+    .panel-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 12px 16px;
         border-bottom: 1px solid var(--border-light);
     }
-    .aws-panel-title {
+    .panel-title {
         font-size: 16px;
         font-weight: 700;
         color: var(--text);
         margin: 0;
     }
-    .aws-panel-body { padding: 16px; }
+    .panel-body { padding: 16px; }
 
     /* ── Stat card ── */
-    .aws-stat {
+    .stat-card {
         background: var(--surface);
         border: 1px solid var(--border);
         padding: 16px 20px;
         border-radius: 2px;
         cursor: pointer;
     }
-    .aws-stat:hover { border-color: var(--primary); }
-    .aws-stat-label {
+    .stat-card:hover { border-color: var(--primary); }
+    .stat-label {
         font-size: 11px;
         font-weight: 700;
         text-transform: uppercase;
@@ -120,7 +120,7 @@
         color: var(--muted);
         margin-bottom: 6px;
     }
-    .aws-stat-value {
+    .stat-value {
         font-size: 28px;
         font-weight: 700;
         color: var(--text);
@@ -128,7 +128,7 @@
     }
 
     /* ── Section header ── */
-    .aws-section-header {
+    .section-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -136,7 +136,7 @@
         background: #f2f3f3;
         border-bottom: 1px solid var(--border-light);
     }
-    .aws-section-title {
+    .section-title {
         font-size: 13px;
         font-weight: 700;
         color: var(--label);
@@ -145,7 +145,7 @@
     }
 
     /* ── Buttons ── */
-    .btn-aws-primary {
+    .btn-primary {
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -161,10 +161,10 @@
         text-decoration: none;
         line-height: 1.5;
     }
-    .btn-aws-primary:hover:not(:disabled) { background: var(--primary-hover); }
-    .btn-aws-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .btn-aws-secondary {
+    .btn-secondary {
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -180,9 +180,9 @@
         text-decoration: none;
         line-height: 1.5;
     }
-    .btn-aws-secondary:hover:not(:disabled) { background: #f2f3f3; }
+    .btn-secondary:hover:not(:disabled) { background: #f2f3f3; }
 
-    .btn-aws-danger {
+    .btn-danger {
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -197,10 +197,10 @@
         transition: background 0.1s;
         line-height: 1.5;
     }
-    .btn-aws-danger:hover:not(:disabled) { background: var(--error-bg); }
+    .btn-danger:hover:not(:disabled) { background: var(--error-bg); }
 
     /* ── Form controls ── */
-    .aws-input {
+    .field-input {
         display: block;
         width: 100%;
         padding: 6px 10px;
@@ -213,13 +213,13 @@
         transition: border-color 0.1s, box-shadow 0.1s;
         line-height: 1.5;
     }
-    .aws-input:focus {
+    .field-input:focus {
         border-color: var(--primary);
         box-shadow: 0 0 0 2px rgba(0, 115, 187, 0.2);
     }
-    .aws-input::placeholder { color: #879596; }
+    .field-input::placeholder { color: #879596; }
 
-    .aws-select {
+    .field-select {
         display: block;
         width: 100%;
         padding: 6px 28px 6px 10px;
@@ -237,12 +237,12 @@
         line-height: 1.5;
         transition: border-color 0.1s;
     }
-    .aws-select:focus {
+    .field-select:focus {
         border-color: var(--primary);
         box-shadow: 0 0 0 2px rgba(0, 115, 187, 0.2);
     }
 
-    .aws-label {
+    .field-label {
         display: block;
         font-size: 12px;
         font-weight: 700;
@@ -302,27 +302,27 @@
     }
 
     /* ── Progress bar ── */
-    .aws-progress-track {
+    .progress-track {
         height: 4px;
         background: #eaeded;
         border-radius: 2px;
         overflow: hidden;
     }
-    .aws-progress-fill {
+    .progress-fill {
         height: 100%;
         border-radius: 2px;
         transition: width 0.3s ease;
     }
 
     /* ── Modal ── */
-    .aws-modal-overlay {
+    .modal-overlay {
         position: fixed; inset: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 100;
         display: flex; align-items: center; justify-content: center;
         padding: 1rem;
     }
-    .aws-modal {
+    .modal {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 2px;
@@ -331,14 +331,14 @@
         max-height: 90vh; overflow-y: auto;
         animation: slideIn 0.15s ease-out;
     }
-    .aws-modal-header {
+    .modal-header {
         display: flex; align-items: center; justify-content: space-between;
         padding: 16px 20px;
         border-bottom: 1px solid var(--border-light);
     }
-    .aws-modal-title { font-size: 18px; font-weight: 700; color: var(--text); margin: 0; }
-    .aws-modal-body { padding: 20px; }
-    .aws-modal-footer {
+    .modal-title { font-size: 18px; font-weight: 700; color: var(--text); margin: 0; }
+    .modal-body { padding: 20px; }
+    .modal-footer {
         display: flex; justify-content: flex-end; gap: 8px;
         padding: 12px 20px;
         border-top: 1px solid var(--border-light);
@@ -351,14 +351,14 @@
     }
 
     /* ── Alert boxes ── */
-    .aws-alert-error {
+    .alert-error {
         display: flex; align-items: flex-start; gap: 8px;
         padding: 10px 14px; font-size: 13px;
         background: var(--error-bg); color: var(--error);
         border: 1px solid #f5bcb3; border-left: 4px solid var(--error);
         border-radius: 2px; margin-bottom: 12px;
     }
-    .aws-alert-info {
+    .alert-info {
         display: flex; align-items: flex-start; gap: 8px;
         padding: 10px 14px; font-size: 13px;
         background: var(--info-bg); color: var(--primary);
@@ -367,18 +367,18 @@
     }
 
     /* ── Search ── */
-    .aws-search-wrapper { position: relative; }
-    .aws-search-icon {
+    .search-wrapper { position: relative; }
+    .search-icon {
         position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
         color: #879596; width: 14px; height: 14px; pointer-events: none;
     }
-    .aws-search-input { padding-left: 30px !important; }
+    .search-input { padding-left: 30px !important; }
 
-    /* ── Link hover (CSS-only, for server components) ── */
-    .aws-link {
+    /* ── Link hover (CSS-only, usable in server components) ── */
+    .link {
         color: var(--primary);
         text-decoration: none;
         font-weight: 600;
     }
-    .aws-link:hover { text-decoration: underline; }
+    .link:hover { text-decoration: underline; }
 }

@@ -36,8 +36,8 @@ export default function UserFilterBar({ departments }: UserFilterBarProps) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
 
             {/* Search */}
-            <div className="aws-search-wrapper" style={{ flex: '1', minWidth: '200px', maxWidth: '300px' }}>
-                <Search className="aws-search-icon" />
+            <div className="search-wrapper" style={{ flex: '1', minWidth: '200px', maxWidth: '300px' }}>
+                <Search className="search-icon" />
                 <input
                     id="user-search-input"
                     type="text"
@@ -53,7 +53,7 @@ export default function UserFilterBar({ departments }: UserFilterBarProps) {
                 id="role-filter-select"
                 value={currentRole}
                 onChange={e => updateParam('role', e.target.value)}
-                className="aws-select"
+                className="field-select"
                 style={{ width: '130px' }}
             >
                 <option value="">All roles</option>
@@ -65,7 +65,7 @@ export default function UserFilterBar({ departments }: UserFilterBarProps) {
                 id="department-filter-select"
                 value={currentDepartment}
                 onChange={e => updateParam('department', e.target.value)}
-                className="aws-select"
+                className="field-select"
                 style={{ width: '220px' }}
             >
                 <option value="">All departments</option>
@@ -75,7 +75,7 @@ export default function UserFilterBar({ departments }: UserFilterBarProps) {
             {hasActiveFilters && (
                 <button
                     onClick={clearAllFilters}
-                    className="btn-aws-secondary"
+                    className="btn-secondary"
                     style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                 >
                     <X size={13} /> Clear

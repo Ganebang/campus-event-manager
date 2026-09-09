@@ -36,8 +36,8 @@ export default function EventFilterBar({ categories, tags }: EventFilterBarProps
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
 
             {/* Search */}
-            <div className="aws-search-wrapper" style={{ flex: '1', minWidth: '200px', maxWidth: '320px' }}>
-                <Search className="aws-search-icon" />
+            <div className="search-wrapper" style={{ flex: '1', minWidth: '200px', maxWidth: '320px' }}>
+                <Search className="search-icon" />
                 <input
                     id="event-search-input"
                     type="text"
@@ -53,7 +53,7 @@ export default function EventFilterBar({ categories, tags }: EventFilterBarProps
                 id="timeframe-filter-select"
                 value={currentTimeframe}
                 onChange={e => updateParam('timeframe', e.target.value)}
-                className="aws-select"
+                className="field-select"
                 style={{ width: '140px' }}
             >
                 <option value="">All dates</option>
@@ -66,7 +66,7 @@ export default function EventFilterBar({ categories, tags }: EventFilterBarProps
                 id="category-filter-select"
                 value={currentCategory}
                 onChange={e => updateParam('category', e.target.value)}
-                className="aws-select"
+                className="field-select"
                 style={{ width: '150px' }}
             >
                 <option value="">All categories</option>
@@ -78,7 +78,7 @@ export default function EventFilterBar({ categories, tags }: EventFilterBarProps
                 id="tag-filter-select"
                 value={currentTag}
                 onChange={e => updateParam('tag', e.target.value)}
-                className="aws-select"
+                className="field-select"
                 style={{ width: '130px' }}
             >
                 <option value="">All tags</option>
@@ -88,7 +88,7 @@ export default function EventFilterBar({ categories, tags }: EventFilterBarProps
             {hasActiveFilters && (
                 <button
                     onClick={clearAllFilters}
-                    className="btn-aws-secondary"
+                    className="btn-secondary"
                     style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
                 >
                     <X size={13} /> Clear

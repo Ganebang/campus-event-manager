@@ -1,4 +1,4 @@
-﻿import { getUsers, getDistinctDepartments } from '@/lib/queries';
+import { getUsers, getDistinctDepartments } from '@/lib/queries';
 import UserFilterBar from '@/components/UserFilterBar';
 import CreateUserModal from '@/components/CreateUserModal';
 import Link from 'next/link';
@@ -30,18 +30,18 @@ export default async function UsersPage({ searchParams }: any) {
             </div>
 
             {/* Filter bar */}
-            <div className="aws-panel" style={{ padding: '10px 16px' }}>
+            <div className="panel" style={{ padding: '10px 16px' }}>
                 <UserFilterBar departments={departments} />
             </div>
 
             {/* Users table */}
-            <div className="aws-panel">
-                <div className="aws-panel-header">
-                    <h2 className="aws-panel-title" style={{ fontSize: '14px' }}>
+            <div className="panel">
+                <div className="panel-header">
+                    <h2 className="panel-title" style={{ fontSize: '14px' }}>
                         Users <span style={{ fontWeight: '400', color: 'var(--muted)', fontSize: '13px' }}>({users.length})</span>
                     </h2>
                 </div>
-                <table className="aws-table">
+                <table className="data-table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -63,7 +63,7 @@ export default async function UsersPage({ searchParams }: any) {
                             users.map((user: any) => (
                                 <tr key={user._id}>
                                     <td>
-                                        <Link href={`/users/${user._id}`} className="aws-link">
+                                        <Link href={`/users/${user._id}`} className="link">
                                             {user.firstName} {user.lastName}
                                         </Link>
                                     </td>

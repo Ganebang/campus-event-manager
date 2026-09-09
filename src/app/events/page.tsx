@@ -1,4 +1,4 @@
-﻿import { getEvents, getDistinctCategories, getDistinctTags, getAllUsersBasic } from '@/lib/queries';
+import { getEvents, getDistinctCategories, getDistinctTags, getAllUsersBasic } from '@/lib/queries';
 import EventFilterBar from '@/components/EventFilterBar';
 import CreateEventModal from '@/components/CreateEventModal';
 import Link from 'next/link';
@@ -28,18 +28,18 @@ export default async function EventsPage({ searchParams }: any) {
             </div>
 
             {/* Filter bar */}
-            <div className="aws-panel" style={{ padding: '12px 16px' }}>
+            <div className="panel" style={{ padding: '12px 16px' }}>
                 <EventFilterBar categories={categories} tags={tags} />
             </div>
 
             {/* Events table */}
-            <div className="aws-panel">
-                <div className="aws-panel-header">
-                    <h2 className="aws-panel-title" style={{ fontSize: '14px' }}>
+            <div className="panel">
+                <div className="panel-header">
+                    <h2 className="panel-title" style={{ fontSize: '14px' }}>
                         Events <span style={{ fontWeight: '400', color: 'var(--muted)', fontSize: '13px' }}>({events.length})</span>
                     </h2>
                 </div>
-                <table className="aws-table">
+                <table className="data-table">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -67,7 +67,7 @@ export default async function EventsPage({ searchParams }: any) {
                                 return (
                                     <tr key={event._id}>
                                         <td>
-                                            <Link href={`/events/${event._id}`} className="aws-link">
+                                            <Link href={`/events/${event._id}`} className="link">
                                                 {event.title}
                                             </Link>
                                         </td>
@@ -88,8 +88,8 @@ export default async function EventsPage({ searchParams }: any) {
                                         <td style={{ whiteSpace: 'nowrap' }}>
                                             <span style={{ fontWeight: '600' }}>{confirmed}</span>
                                             <span style={{ color: 'var(--muted)' }}>/{event.capacity}</span>
-                                            <div className="aws-progress-track" style={{ width: '64px', marginTop: '4px' }}>
-                                                <div className="aws-progress-fill" style={{
+                                            <div className="progress-track" style={{ width: '64px', marginTop: '4px' }}>
+                                                <div className="progress-fill" style={{
                                                     width: `${pct}%`,
                                                     background: isFull ? 'var(--error)' : pct >= 80 ? '#693105' : 'var(--primary)'
                                                 }} />

@@ -1,4 +1,4 @@
-﻿import { getDashboardStats, getNextUpcomingEvents, getMostPopularEvent, getCategoryBreakdown } from '@/lib/queries';
+import { getDashboardStats, getNextUpcomingEvents, getMostPopularEvent, getCategoryBreakdown } from '@/lib/queries';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -37,9 +37,9 @@ export default async function Dashboard() {
                     { label: 'Registrations',   value: stats.totalRegistrations, href: '/analytics' },
                 ].map(kpi => (
                     <Link key={kpi.label} href={kpi.href} style={{ textDecoration: 'none' }}>
-                        <div className="aws-stat">
-                            <div className="aws-stat-label">{kpi.label}</div>
-                            <div className="aws-stat-value">{kpi.value}</div>
+                        <div className="stat-card">
+                            <div className="stat-label">{kpi.label}</div>
+                            <div className="stat-value">{kpi.value}</div>
                         </div>
                     </Link>
                 ))}
@@ -48,14 +48,14 @@ export default async function Dashboard() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '16px' }}>
 
                 {/* Upcoming events table */}
-                <div className="aws-panel">
-                    <div className="aws-panel-header">
-                        <h2 className="aws-panel-title">Upcoming Events</h2>
-                        <Link href="/events?timeframe=upcoming" className="btn-aws-secondary" style={{ fontSize: '12px', padding: '4px 10px' }}>
+                <div className="panel">
+                    <div className="panel-header">
+                        <h2 className="panel-title">Upcoming Events</h2>
+                        <Link href="/events?timeframe=upcoming" className="btn-secondary" style={{ fontSize: '12px', padding: '4px 10px' }}>
                             View all <ArrowRight size={12} />
                         </Link>
                     </div>
-                    <table className="aws-table">
+                    <table className="data-table">
                         <thead>
                             <tr>
                                 <th>Event</th>
@@ -77,7 +77,7 @@ export default async function Dashboard() {
                                     return (
                                         <tr key={event._id}>
                                             <td>
-                                                <Link href={`/events/${event._id}`} className="aws-link">
+                                                <Link href={`/events/${event._id}`} className="link">
                                                     {event.title}
                                                 </Link>
                                             </td>
@@ -88,8 +88,8 @@ export default async function Dashboard() {
                                             <td style={{ color: 'var(--muted)' }}>{event.location?.building}</td>
                                             <td style={{ whiteSpace: 'nowrap' }}>
                                                 <span>{confirmed}/{event.capacity}</span>
-                                                <div className="aws-progress-track" style={{ width: '60px', marginTop: '4px' }}>
-                                                    <div className="aws-progress-fill" style={{ width: `${pct}%`, background: isFull ? 'var(--error)' : pct >= 80 ? 'var(--warning)' : 'var(--primary)' }} />
+                                                <div className="progress-track" style={{ width: '60px', marginTop: '4px' }}>
+                                                    <div className="progress-fill" style={{ width: `${pct}%`, background: isFull ? 'var(--error)' : pct >= 80 ? 'var(--warning)' : 'var(--primary)' }} />
                                                 </div>
                                             </td>
                                             <td>{isFull ? <span className="badge-full">Full</span> : <span className="badge-upcoming">Open</span>}</td>
@@ -106,12 +106,12 @@ export default async function Dashboard() {
 
                     {/* Most popular event */}
                     {mostPopularEvent && (
-                        <div className="aws-panel">
-                            <div className="aws-section-header">
-                                <span className="aws-section-title">Most Popular Event</span>
+                        <div className="panel">
+                            <div className="section-header">
+                                <span className="section-title">Most Popular Event</span>
                             </div>
-                            <div className="aws-panel-body">
-                                <Link href={`/events/${mostPopularEvent._id}`} className="aws-link">
+                            <div className="panel-body">
+                                <Link href={`/events/${mostPopularEvent._id}`} className="link">
                                     {mostPopularEvent.title}
                                 </Link>
                                 <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '4px', marginBottom: '12px' }}>
@@ -121,20 +121,20 @@ export default async function Dashboard() {
                                     <span style={{ color: 'var(--muted)' }}>Occupancy</span>
                                     <span style={{ fontWeight: '700' }}>{popularConfirmedCount} / {mostPopularEvent.capacity} seats ({popularOccupancy}%)</span>
                                 </div>
-                                <div className="aws-progress-track">
-                                    <div className="aws-progress-fill" style={{ width: `${popularOccupancy}%`, background: 'var(--primary)' }} />
+                                <div className="progress-track">
+                                    <div className="progress-fill" style={{ width: `${popularOccupancy}%`, background: 'var(--primary)' }} />
                                 </div>
                             </div>
                         </div>
                     )}
 
                     {/* Category breakdown */}
-                    <div className="aws-panel" style={{ flex: 1 }}>
-                        <div className="aws-section-header">
-                            <span className="aws-section-title">Events by Category</span>
-                            <Link href="/analytics" className="aws-link" style={{ fontSize: '12px', fontWeight: '400' }}>Details</Link>
+                    <div className="panel" style={{ flex: 1 }}>
+                        <div className="section-header">
+                            <span className="section-title">Events by Category</span>
+                            <Link href="/analytics" className="link" style={{ fontSize: '12px', fontWeight: '400' }}>Details</Link>
                         </div>
-                        <div className="aws-panel-body" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             {categoryBreakdown.map((cat: any) => {
                                 const max = Math.max(...categoryBreakdown.map((c: any) => c.count), 1);
                                 const pct = Math.round((cat.count / max) * 100);
@@ -144,8 +144,8 @@ export default async function Dashboard() {
                                             <span style={{ color: 'var(--text)' }}>{cat._id}</span>
                                             <span style={{ color: 'var(--muted)', fontWeight: '600' }}>{cat.count}</span>
                                         </div>
-                                        <div className="aws-progress-track">
-                                            <div className="aws-progress-fill" style={{ width: `${pct}%`, background: 'var(--primary)' }} />
+                                        <div className="progress-track">
+                                            <div className="progress-fill" style={{ width: `${pct}%`, background: 'var(--primary)' }} />
                                         </div>
                                     </div>
                                 );

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import { X, Edit2, Loader2 } from 'lucide-react';
@@ -39,47 +39,47 @@ export default function EditUserModal({ user, handleUpdate }: EditUserModalProps
 
     return (
         <>
-            <button id="edit-user-btn" onClick={() => setIsOpen(true)} className="btn-aws-secondary">
+            <button id="edit-user-btn" onClick={() => setIsOpen(true)} className="btn-secondary">
                 <Edit2 size={13} /> Edit
             </button>
 
             {isOpen && (
-                <div className="aws-modal-overlay" onClick={() => setIsOpen(false)}>
-                    <div className="aws-modal" onClick={e => e.stopPropagation()}>
-                        <div className="aws-modal-header">
-                            <h2 className="aws-modal-title">Edit user</h2>
+                <div className="modal-overlay" onClick={() => setIsOpen(false)}>
+                    <div className="modal" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2 className="modal-title">Edit user</h2>
                             <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', display: 'flex', padding: '2px' }}>
                                 <X size={18} />
                             </button>
                         </div>
-                        <div className="aws-modal-body">
-                            {error && <div className="aws-alert-error">{error}</div>}
+                        <div className="modal-body">
+                            {error && <div className="alert-error">{error}</div>}
 
                             <form id="edit-user-form" action={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                                     <div>
-                                        <label className="aws-label">First name <span style={{ color: 'var(--error)' }}>*</span></label>
-                                        <input name="firstName" required defaultValue={user.firstName} className="aws-input" />
+                                        <label className="field-label">First name <span style={{ color: 'var(--error)' }}>*</span></label>
+                                        <input name="firstName" required defaultValue={user.firstName} className="field-input" />
                                     </div>
                                     <div>
-                                        <label className="aws-label">Last name <span style={{ color: 'var(--error)' }}>*</span></label>
-                                        <input name="lastName" required defaultValue={user.lastName} className="aws-input" />
+                                        <label className="field-label">Last name <span style={{ color: 'var(--error)' }}>*</span></label>
+                                        <input name="lastName" required defaultValue={user.lastName} className="field-input" />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="aws-label">Email <span style={{ color: 'var(--error)' }}>*</span></label>
-                                    <input name="email" type="email" required defaultValue={user.email} className="aws-input" />
+                                    <label className="field-label">Email <span style={{ color: 'var(--error)' }}>*</span></label>
+                                    <input name="email" type="email" required defaultValue={user.email} className="field-input" />
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                                     <div>
-                                        <label className="aws-label">Department <span style={{ color: 'var(--error)' }}>*</span></label>
-                                        <select name="department" required defaultValue={user.department} className="aws-select">
+                                        <label className="field-label">Department <span style={{ color: 'var(--error)' }}>*</span></label>
+                                        <select name="department" required defaultValue={user.department} className="field-select">
                                             {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="aws-label">Role <span style={{ color: 'var(--error)' }}>*</span></label>
-                                        <select name="role" defaultValue={user.role} className="aws-select">
+                                        <label className="field-label">Role <span style={{ color: 'var(--error)' }}>*</span></label>
+                                        <select name="role" defaultValue={user.role} className="field-select">
                                             <option value="student">Student</option>
                                             <option value="faculty">Faculty</option>
                                             <option value="staff">Staff</option>
@@ -87,14 +87,14 @@ export default function EditUserModal({ user, handleUpdate }: EditUserModalProps
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="aws-label">Interests (comma-separated)</label>
-                                    <input name="interests" defaultValue={user.interests?.join(', ')} className="aws-input" />
+                                    <label className="field-label">Interests (comma-separated)</label>
+                                    <input name="interests" defaultValue={user.interests?.join(', ')} className="field-input" />
                                 </div>
                             </form>
                         </div>
-                        <div className="aws-modal-footer">
-                            <button type="button" onClick={() => setIsOpen(false)} className="btn-aws-secondary">Cancel</button>
-                            <button type="submit" form="edit-user-form" disabled={loading} className="btn-aws-primary">
+                        <div className="modal-footer">
+                            <button type="button" onClick={() => setIsOpen(false)} className="btn-secondary">Cancel</button>
+                            <button type="submit" form="edit-user-form" disabled={loading} className="btn-primary">
                                 {loading ? <><Loader2 size={13} className="animate-spin" /> Saving...</> : 'Save changes'}
                             </button>
                         </div>

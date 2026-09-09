@@ -53,7 +53,7 @@ export default async function UserDetailsPage({ params }: any) {
                 <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
                     <EditUserModal user={user} handleUpdate={handleUpdate} />
                     <form action={handleDelete}>
-                        <button type="submit" className="btn-aws-danger">
+                        <button type="submit" className="btn-danger">
                             <Trash2 size={13} /> Delete
                         </button>
                     </form>
@@ -66,9 +66,9 @@ export default async function UserDetailsPage({ params }: any) {
                 {/* Left: profile details */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
-                    <div className="aws-panel">
-                        <div className="aws-section-header">
-                            <span className="aws-section-title">Profile</span>
+                    <div className="panel">
+                        <div className="section-header">
+                            <span className="section-title">Profile</span>
                         </div>
                         <div>
                             {[
@@ -89,9 +89,9 @@ export default async function UserDetailsPage({ params }: any) {
                     </div>
 
                     {/* Stats */}
-                    <div className="aws-panel">
-                        <div className="aws-section-header">
-                            <span className="aws-section-title">Activity</span>
+                    <div className="panel">
+                        <div className="section-header">
+                            <span className="section-title">Activity</span>
                         </div>
                         <div>
                             {[
@@ -109,9 +109,9 @@ export default async function UserDetailsPage({ params }: any) {
                 </div>
 
                 {/* Right: event history table */}
-                <div className="aws-panel">
-                    <div className="aws-panel-header">
-                        <h2 className="aws-panel-title" style={{ fontSize: '14px' }}>
+                <div className="panel">
+                    <div className="panel-header">
+                        <h2 className="panel-title" style={{ fontSize: '14px' }}>
                             Event History <span style={{ fontWeight: '400', color: 'var(--muted)', fontSize: '13px' }}>({user.registeredEvents?.length || 0})</span>
                         </h2>
                     </div>
@@ -120,7 +120,7 @@ export default async function UserDetailsPage({ params }: any) {
                             No event registrations yet.
                         </div>
                     ) : (
-                        <table className="aws-table">
+                        <table className="data-table">
                             <thead>
                                 <tr>
                                     <th>Event</th>
@@ -137,7 +137,7 @@ export default async function UserDetailsPage({ params }: any) {
                                     return (
                                         <tr key={idx}>
                                             <td>
-                                                <Link href={`/events/${event._id}`} className="aws-link">
+                                                <Link href={`/events/${event._id}`} className="link">
                                                     {event.title}
                                                 </Link>
                                             </td>
