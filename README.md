@@ -1,5 +1,6 @@
 # Campus Event Manager
 
+**Author:** Gane Kwada AMALA
 ## 1. Project Goal
 A university wants a lightweight application to manage campus events such as workshops, talks, meetups, hackathons, and student activities. 
 The objective of this project is to demonstrate the ability to combine:

@@ -1,4 +1,4 @@
-﻿import * as React from "react"
+import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
 
@@ -17,7 +17,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
           {
-            'bg-slate-900 text-white hover:bg-slate-800 shadow-sm': variant === 'default',
+            'bg-primary-600 text-white hover:bg-primary-700 shadow-sm': variant === 'default',
             'bg-red-500 text-white shadow-sm hover:bg-red-600': variant === 'destructive',
             'border border-slate-200 bg-white hover:bg-slate-50 text-slate-700': variant === 'outline',
             'bg-slate-100 text-slate-900 hover:bg-slate-200': variant === 'secondary',

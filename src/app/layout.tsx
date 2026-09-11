@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import './globals.css';
 import Link from 'next/link';
@@ -24,29 +24,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
             </head>
-            <body className="flex h-screen overflow-hidden" style={{ background: 'var(--bg)', fontFamily: 'Inter, sans-serif' }}>
+            <body className="flex h-screen bg-background font-sans overflow-hidden text-foreground">
 
                 {/* Sidebar */}
-                <aside style={{ width: '220px', background: 'var(--nav)', flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+                <aside className="w-64 bg-nav-bg border-r border-nav-border flex flex-col shrink-0">
 
                     {/* Logo */}
-                    <div style={{ padding: '0 16px', height: '56px', display: 'flex', alignItems: 'center', borderBottom: '1px solid #2d3b4e' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <div style={{ width: '28px', height: '28px', background: 'var(--accent)', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <div className="px-6 h-16 flex items-center border-b border-nav-border">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
                             </div>
                             <div>
-                                <p style={{ fontSize: '13px', fontWeight: '700', color: '#fff', lineHeight: '1.2' }}>Campus Events</p>
-                                <p style={{ fontSize: '10px', color: 'var(--nav-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Management</p>
+                                <p className="text-sm font-bold text-slate-800 leading-tight tracking-tight">Campus Events</p>
+                                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-medium">Manager</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Nav */}
-                    <nav style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
-                        <p style={{ fontSize: '11px', fontWeight: '700', color: 'var(--nav-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', padding: '10px 16px 6px' }}>
+                    <nav className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 pb-2 pt-2">
                             Menu
                         </p>
                         {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
@@ -55,45 +55,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                                 <Link
                                     key={href}
                                     href={href}
-                                    style={{
-                                        display: 'flex', alignItems: 'center', gap: '10px',
-                                        padding: '8px 16px',
-                                        fontSize: '13px',
-                                        fontWeight: isActive ? '600' : '400',
-                                        color: isActive ? '#fff' : 'var(--nav-text)',
-                                        background: isActive ? 'rgba(236,114,17,0.15)' : 'transparent',
-                                        borderLeft: isActive ? '3px solid var(--accent)' : '3px solid transparent',
-                                        textDecoration: 'none',
-                                        transition: 'background 0.1s',
-                                    }}
-                                    onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = 'var(--nav-hover)'; }}
-                                    onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                        isActive 
+                                            ? 'bg-primary-50 text-primary-700 shadow-sm' 
+                                            : 'text-nav-text hover:bg-nav-hover hover:text-slate-900'
+                                    }`}
                                 >
-                                    <Icon size={15} style={{ color: isActive ? 'var(--accent)' : 'var(--nav-muted)', flexShrink: 0 }} />
-                                    <span style={{ flex: 1 }}>{label}</span>
-                                    {isActive && <ChevronRight size={12} style={{ color: 'var(--nav-muted)' }} />}
+                                    <Icon size={18} className={`${isActive ? 'text-primary-600' : 'text-slate-400'}`} />
+                                    <span className="flex-1">{label}</span>
                                 </Link>
                             );
                         })}
                     </nav>
 
                     {/* Footer */}
-                    <div style={{ padding: '12px 16px', borderTop: '1px solid #2d3b4e' }}>
-                        <p style={{ fontSize: '11px', color: 'var(--nav-muted)' }}>aivancity · Campus Manager</p>
+                    <div className="p-4 border-t border-nav-border">
+                        <p className="text-xs text-slate-400 font-medium">aivancity · Campus Manager</p>
                     </div>
                 </aside>
 
                 {/* Main area */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, overflow: 'hidden' }}>
+                <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-background">
 
                     {/* Top bar */}
-                    <header style={{ height: '56px', background: 'var(--nav)', borderBottom: '1px solid #2d3b4e', display: 'flex', alignItems: 'center', padding: '0 20px', flexShrink: 0 }}>
+                    <header className="h-16 bg-surface/80 backdrop-blur-md border-b border-border flex items-center px-8 shrink-0 z-10 sticky top-0">
                         <PageBreadcrumb pathname={pathname} />
                     </header>
 
                     {/* Content */}
-                    <main style={{ flex: 1, overflow: 'auto', padding: '20px' }}>
-                        {children}
+                    <main className="flex-1 overflow-y-auto p-8">
+                        <div className="max-w-7xl mx-auto w-full">
+                            {children}
+                        </div>
                     </main>
                 </div>
             </body>
@@ -118,17 +111,16 @@ function PageBreadcrumb({ pathname }: { pathname: string }) {
     }
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px' }}>
+        <div className="flex items-center gap-2 text-sm">
             {segments.map((seg, idx) => (
-                <span key={seg.href} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    {idx > 0 && <ChevronRight size={11} style={{ color: '#879596' }} />}
+                <span key={seg.href} className="flex items-center gap-2">
+                    {idx > 0 && <ChevronRight size={14} className="text-slate-400" />}
                     {idx === segments.length - 1 ? (
-                        <span style={{ color: '#d5dbdb', fontWeight: idx > 0 ? '600' : '400' }}>{seg.label}</span>
+                        <span className="text-slate-900 font-semibold">{seg.label}</span>
                     ) : (
-                        <Link href={seg.href} style={{ color: '#879596', textDecoration: 'none' }}
-                            onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#d5dbdb'}
-                            onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#879596'}
-                        >{seg.label}</Link>
+                        <Link href={seg.href} className="text-slate-500 hover:text-primary-600 transition-colors font-medium">
+                            {seg.label}
+                        </Link>
                     )}
                 </span>
             ))}

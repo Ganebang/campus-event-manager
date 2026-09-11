@@ -24,7 +24,7 @@ export default function EventCard({ event }: EventCardProps) {
     const categoryStyle = CATEGORY_COLORS[event.category] || DEFAULT_CATEGORY_COLOR;
 
     return (
-        <div className={`group flex flex-col rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 ${isPast ? 'opacity-70' : ''}`}>
+        <div className={`group flex flex-col rounded-xl bg-white border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 ${isPast ? 'opacity-70' : ''}`}>
 
             {/* Color Header */}
             <div className="h-2 w-full" style={{ background: categoryStyle.dot }} />
@@ -37,11 +37,11 @@ export default function EventCard({ event }: EventCardProps) {
                         {event.category}
                     </span>
                     {isFull ? (
-                        <span className="badge-full">Full</span>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-100 text-red-700 border border-red-200 uppercase tracking-wide">Full</span>
                     ) : isPast ? (
-                        <span className="badge-past">Past</span>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-500 border border-slate-200 uppercase tracking-wide">Past</span>
                     ) : (
-                        <span className="badge-upcoming">Upcoming</span>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-primary-100 text-primary-700 border border-primary-200 uppercase tracking-wide">Upcoming</span>
                     )}
                 </div>
 
@@ -67,7 +67,7 @@ export default function EventCard({ event }: EventCardProps) {
                     <div className="flex items-center gap-1 flex-wrap">
                         <Tag className="w-3 h-3 text-slate-400 shrink-0" />
                         {event.tags.slice(0, 3).map((tag: string) => (
-                            <span key={tag} className="tag-pill">{tag}</span>
+                            <span key={tag} className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">{tag}</span>
                         ))}
                     </div>
                 )}
@@ -84,9 +84,9 @@ export default function EventCard({ event }: EventCardProps) {
                             {occupancyPercent}%
                         </span>
                     </div>
-                    <div className="progress-bar-track">
+                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                         <div
-                            className="progress-bar-fill"
+                            className="h-full rounded-full transition-all duration-300"
                             style={{
                                 width: `${Math.min(occupancyPercent, 100)}%`,
                                 background: isFull ? '#ef4444' : occupancyPercent >= 80 ? '#f59e0b' : categoryStyle.dot
